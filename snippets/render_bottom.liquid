@@ -476,7 +476,61 @@
 </template>
 <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'drawer.min.css' | asset_url }}" media="all">
+{% comment %} 
 <link rel="stylesheet" href="{{ 'line-awesome.min.css' | asset_url }}" media="print" onload="this.media='all'">
+{% endcomment %}
 {%- if settings.colors_css %}<link rel="stylesheet" href="{{ 'colors.css' | asset_url }}" media="print" onload="this.media='all'">{% endif -%} 
 {%- if settings.custom_css_t4s %}{{- 'custom.css' | asset_url | stylesheet_tag:preload:true -}}{% endif -%}
 {%- if admin_sp %}<style>.t4s-section-admn-fixed { position: fixed;top: 100px;pointer-events: none; z-index: -1;opacity: 0; }.t4s-section-admn2-fixed { position: fixed;top: 100px;z-index: 468; }</style>{% endif -%}
+<script>
+// Load the script after the user scrolls, moves the mouse, or touches the screen
+document.addEventListener('scroll', initQuicklinkOnEvent);
+document.addEventListener('mousemove', initQuicklinkOnEvent);
+
+// Initializes quicklink.js in response to an event
+function initQuicklinkOnEvent (event) {
+	event.currentTarget.removeEventListener(event.type, initQuicklinkOnEvent);
+	initQlink();
+}
+
+function initQlink () {
+
+	if (window.qlDidInit) {
+	  // Don't load again
+	  return false;
+	}
+
+	window.qlDidInit = true;
+	
+	setTimeout(function(){
+    	// Create the script
+    	const script = document.createElement('script');
+    	script.type = 'text/javascript';
+    	script.onload = () => {
+          console.log('quicklink ready');
+          quicklink.listen({
+            ignores: [
+              /\/api\/?/,
+              /\/account\/?/,
+              /\/cart\/?/,
+              /\/search\/?/,
+              /\/your-wishlist\/?/,
+              /\/aftership\/?/,
+              /\/search?/,
+              uri => uri.includes('.zip'),
+              uri => uri.includes('.pdf'),
+              uri => uri.includes('search'),
+              (uri, elem) => elem.hasAttribute('noprefetch'),
+            ],
+          })
+        }
+    	script.src = '//cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js';
+    	
+    	// We are still deferring the script
+    	script.defer = true;
+    	
+    	// Append the script to the body of the document
+    	document.getElementsByTagName('body')[0].appendChild(script);
+	},99)
+}
+</script>

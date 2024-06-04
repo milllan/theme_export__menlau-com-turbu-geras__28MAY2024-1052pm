@@ -7,7 +7,7 @@ endunless
 assign image = product.featured_media | default: placeholder_img
  -%}
 
-<div class="t4s-product t4s-pr-grid t4s-col-12 t4s-pr-group t4s-pr-{{ pid }} {{ col }} t4s-col-item">
+<div mill-product-group-item class="t4s-product t4s-pr-grid t4s-col-12 t4s-pr-group t4s-pr-{{ pid }} {{ col }} t4s-col-item">
 	<div class="t4s-row t4s-product-wrapper" timeline hdt-reveal="slide-in">
 		<div class="t4s-col-item t4s-col t4s-product-img">
 			{%- if image != blank -%}

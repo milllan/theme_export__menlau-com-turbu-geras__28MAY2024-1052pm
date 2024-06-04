@@ -34,6 +34,7 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
     <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="theme-color" content="{{ settings.body_bg }}">
     <link rel="canonical" href="{{ canonical_url }}">
+    <meta name="google-site-verification" content="u8L4L91-eHLReuvD-_naJmI7D_tUd13K_bmV_GD_A1k" />
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <!-- Prefetching and preconnection for resources -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" crossorigin>
@@ -72,7 +73,37 @@ t4sp-theme t4s-wrapper__{{ settings.general_layout }} rtl_{{ isRTL }} swatch_col
     {%- endif -%}
 
     {%- render 'meta-tags', t_name: t_name -%}
-    
+
+    <style>
+
+.t4s-drawer{
+    content-visibility: hidden;
+}
+.t4s-drawer[aria-hidden=false] {
+    content-visibility: visible;
+}
+
+      #t4s-menu-drawer,
+.t4s-pr_breadcrumbs,
+.t4s-product__media-wrapper,
+.t4s-product-tabs-wrapper,
+.t4s-flicky-slider,
+.t4s-product,
+.id_product-recommendations,
+.id_recently_viewed,
+footer{
+    contain: content;
+}
+
+/*header,*/ /*variations selection cut off */
+/*.t4s-section-main, .t4s-section-main-product, .t4s-product__info-wrapper,*/  /* variations not showing on mobile */
+.t4s-product-extra,
+.t4s-section-inner
+{
+    contain: layout;
+}
+    </style>
+
     <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
     <script src="{{ 'global.min.js' | asset_url }}" defer="defer"></script>
     {{ content_for_header }}
